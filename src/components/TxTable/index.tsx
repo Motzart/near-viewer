@@ -2,6 +2,7 @@ import React from 'react';
 import { useTable } from 'react-table';
 import { format } from 'timeago.js';
 import { ITx } from '~services/api';
+import { Link } from "react-router-dom";
 
 type Props = {
   txs: ITx[]
@@ -15,6 +16,7 @@ export const TxTable = (props: Props) => {
       {
         Header: 'Txn Hash',
         accessor: 'transaction_hash',
+        Cell: (props: any) => <Link to={`txs/${props.value}`}>{props.value}</Link>
       },
       {
         Header: 'Method',
@@ -23,7 +25,7 @@ export const TxTable = (props: Props) => {
       {
         Header: 'Age',
         accessor: 'block_timestamp',
-        Cell: props => new Date(props.value/1000000).toLocaleDateString(),
+        Cell: (props: any) => new Date(props.value/1000000).toLocaleDateString(),
       },
       {
         Header: 'From',

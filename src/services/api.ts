@@ -1,5 +1,7 @@
-
 import getConfig from '../config';
+import { near } from '~services/near';
+import { JsonRpcProvider } from 'near-api-js/lib/providers';
+
 const config = getConfig();
 
 export interface ITx {
@@ -34,4 +36,11 @@ export const getAccountTransactions = async (
     .catch(() => {
       return [];
     });
+};
+
+export const getTransactionByUserId = (txHash: string, accountId: string) => {
+  return (near.connection.provider as JsonRpcProvider).sendJsonRpc(
+    'EXPERIMENTAL_tx_status',
+    [txHash, accountId]
+  );
 };
